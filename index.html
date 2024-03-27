@@ -54,10 +54,19 @@
 </p>
 <h2>Literature Review; Biography; Social Impact; Industry Applications; Follow-on Research; and Peer-Review</h2>
 
-<p>Just as we have done in the role-playing exercise, analyze the paper from all perspectives.
+<p>DenseNet is a neural network architecture that was created to address the vanishing gradient problem, strengthen feature propagation, 
+ encourage feature reuse, and reduce the number of parameters. They work by connecting each layer to every other layer in a feed-forward fashion,
+ as opposed to ResNets and other CNNs where each layer is only connected to its subsequent layer. In other words, DenseNet layers combine features
+ by concatenation, while ResNet layers combine features by summation. 
 </p>
 
-<p>Optionally, in addition to a reading-based analysis, implement the ideas of the paper in code, and report on your findings.
+<p>Experimentation has revealed several significant attributes of DenseNets and highlighted their differences with ResNets. For example, 
+ DenseNets perform better as the number of layers (L) and the growth rate (k) increases. This suggests that DenseNets can utilize the increased 
+ representational power of bigger and deeper models. It also means that overfitting is not an issue with these networks. An important 
+ difference that we have learned between DenseNets and ResNets is that DenseNets utilize their parameters much more efficiently than ResNets as well 
+ as other architectures. There were instances in the testing where DenseNets outperformed the ResNets despite only having half the parameters. 
+ The increased parametric efficiency has led to DenseNets being less prone to overfitting. These advantages are examples of why we should further 
+ research DenseNet architecture to better understand how to create and improve these benefits.
 </p>
 
 <h3>References</h3>
