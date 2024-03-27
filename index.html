@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
-<title>Your Project Name</title>
-<meta property="og:title" content=Your Project Name" />
+<title>DS 4440: Practical Neural Networks</title>
+<meta property="og:title" content"Analysis: Densely Connected Convolutional Networks" />
 <meta name="twitter:title" content="Your Project Name" />
 <meta name="description" content="Your project about your cool topic described right here." />
 <meta property="og:description" content="Your project about your cool topic described right here." />
@@ -22,8 +22,8 @@
 <div class="nd-pageheader">
  <div class="container">
  <h1 class="lead">
- <nobr class="widenobr">Your Project Name</nobr>
- <nobr class="widenobr">For CS 7150</nobr>
+ <nobr class="widenobr">Densely Connected Convolutional Network</nobr>
+ <nobr class="widenobr">For DS 4440</nobr>
  </h1>
  </div>
 </div><!-- end nd-pageheader -->
@@ -31,13 +31,27 @@
 <div class="container">
 <div class="row">
 <div class="col justify-content-center text-center">
-<h2>An Analysis of [papername]</h2>
+<h2>An Analysis of Densely Connected Convolutional Network</h2>
 <p>Describe the paper and the big question about it that interests you.</p>
 </div>
 </div>
 <div class="row">
 <div class="col">
 
+<h2>Introduction</h2>
+<p>Densely Connected Convolutional Network, or DenseNet, is a model architecture that leverage the fact that
+  convolutional networks can be substantially deeper, more accurate, and efficient to train if they contain 
+  shorter connections between layers close to the input and those close to the output. Instead of the traditional 
+  convolutional networks with L layers have L connections - one between each layer and its subsequent layer - DenseNet
+  has L(L+1)/2 direct connections. For each layer, the feature-maps of all preceding layers are used as inputs, 
+  and its own feature-maps are used as inputs into all subsequent layers. As a result, DenseNet provides several
+  compelling advantagesthey alleviate the vanishing-gradient problem, strengthen feature propagation, encourage
+  feature euse, and substantially reduce the number of parameters.</p>
+<p>On four highly competitive object recognition benchmark tasks (CIFAR-10, CIFAR-100, SVHN, and ImageNet),
+  DenseNets seems to obtain significant accuracy to a previous Convolutional Network Architecture in class - ResNet.
+  For our analysis, we want to explore and compare DenseNet to ResNet in terms of efficienecy/ Computational resource 
+  use, Performance, and Applications, as well as exploring the limitation of DenseNet.
+</p>
 <h2>Literature Review; Biography; Social Impact; Industry Applications; Follow-on Research; and Peer-Review</h2>
 
 <p>Just as we have done in the role-playing exercise, analyze the paper from all perspectives.
@@ -56,7 +70,8 @@
 
 <h2>Team Members</h2>
                                                    
-<p>Make sure to list here is who is on the team.</p>
+<p>Khoa Anh Vo</p>
+<p>Jake Fuiman</p>
 
   
 </div><!--col-->
