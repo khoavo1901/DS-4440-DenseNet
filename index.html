@@ -53,22 +53,47 @@
   use, Performance, and Applications, as well as exploring the limitation of DenseNet.
 </p>
 <h2>Paper Review</h2>
-<img src="resource\DenseNet_Architecture.png" alt="Description of the image">
 
-<p>DenseNet is a neural network architecture that was created to address the vanishing gradient problem, strengthen feature propagation, 
- encourage feature reuse, and reduce the number of parameters. They work by connecting each layer to every other layer in a feed-forward fashion,
- as opposed to ResNets and other CNNs where each layer is only connected to its subsequent layer. In other words, DenseNet layers combine features
- by concatenation, while ResNet layers combine features by summation. 
-</p>
 
-<p>Experimentation has revealed several significant attributes of DenseNets and highlighted their differences with ResNets. For example, 
- DenseNets perform better as the number of layers (L) and the growth rate (k) increases. This suggests that DenseNets can utilize the increased 
- representational power of bigger and deeper models. It also means that overfitting is not an issue with these networks. An important 
- difference that we have learned between DenseNets and ResNets is that DenseNets utilize their parameters much more efficiently than ResNets as well 
- as other architectures. There were instances in the testing where DenseNets outperformed the ResNets despite only having half the parameters. 
- The increased parametric efficiency has led to DenseNets being less prone to overfitting. These advantages are examples of why we should further 
- research DenseNet architecture to better understand how to create and improve these benefits.
+<p>We have talked about the problem of vanishing gradient where input or gradient after passing through many layers can vanish and "wash out" by
+  the end of the network. The were many ways of tackling the problem: bypassing signal from one layer to the next via identity connections or
+  randomly dropping layers during training to allow better information and gradient flow. Both of those approaches share a distinct characteristic:
+  they create short paths from early layers to later layers.
 </p>
+<p>DenseNet was introduced as a way to distill this insight into an architecture: Instead of the traditional 
+  convolutional networks with L layers have L connections - one between each layer and its subsequent layer - DenseNet
+  has L(L+1)/2 direct connections. For each layer, the feature-maps of all preceding layers are used as inputs, 
+  and its own feature-maps are used as inputs into all subsequent layers. Crucially, in contrast to ResNets, 
+  DenseNet never combine features through summation before they are passed into a layer; instead, they combine 
+  features by concatenating them. These features helps DenseNet achieve 3 effects: it requires fewer parameters, it avoid the vanishing-gradient
+problem, and it provides a regularizing effect on small dataset</p>
+<img src="resource\DenseNet_vs_ResNet.png" alt="Architecture">
+<p>Having talked about DenseNet advantages, we also want to explore its drawbacks: Memory access cost grow
+  quadratically for DenseNet compared to ResNet and also high memory usage due to its concatenating nature where 
+  Due to the fact that for DenseNet, each downstream layer has to access all feature maps in the same Dense Block. Thus,
+  we want to compare the two model against each other to see if one is better than th other.</p>
+
+<h3>Section 3: Method & Implementation</h3>
+<p>We will be training both untrained ResNet and DenseNet model on the <a href="https://huggingface.co/datasets/zh-plus/tiny-imagenet" 
+  target="_blank" rel="noopener noreferrer">TinyImageNet dataset</a> which is a smaller dataset of the ImageNet Dataset. On this dataset,
+  we will evaluate both models in terms of:
+</p>
+<h3>Section 3: Method & Implementation</h3>
+<p>We will be training both untrained ResNet and DenseNet model with different depth on the <a href="https://huggingface.co/datasets/zh-plus/tiny-imagenet" 
+  target="_blank" rel="noopener noreferrer">TinyImageNet dataset</a> which is a smaller dataset of the ImageNet Dataset. On this dataset,
+  we will evaluate both models in terms of:</p>
+<ul>
+  <li>Accuracy</li>
+  <li>Training time</li>
+  <li>Parameters</li>
+  <li>Whether vanishing gradient arise</li>
+  <li>Cost Of Memory</li>
+  <li>[Add more to list as needed]</li>
+</ul>
+
+<h4>Section IV: Experimental Findings</h4>
+
+
 
 <h3>References</h3>
 
