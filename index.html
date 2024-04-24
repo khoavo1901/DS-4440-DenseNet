@@ -32,87 +32,85 @@
 <div class="row">
 <div class="col justify-content-center text-center">
 <h2>An Analysis of Densely Connected Convolutional Network</h2>
-<p>Describe the paper and the big question about it that interests you.</p>
 </div>
 </div>
 <div class="row">
 <div class="col">
 
 <h2>Introduction</h2>
-<p>Densely Connected Convolutional Network, or DenseNet, is a model architecture that leverage the fact that
+<p>Densely Connected Convolutional Network, or DenseNet, is a model architecture that leverages the fact that
   convolutional networks can be substantially deeper, more accurate, and efficient to train if they contain 
   shorter connections between layers close to the input and those close to the output. Instead of the traditional 
-  convolutional networks with L layers have L connections - one between each layer and its subsequent layer - DenseNet
+  convolutional networks with L layers that have L connections - one between each layer and its subsequent layer - DenseNet
   has L(L+1)/2 direct connections. For each layer, the feature-maps of all preceding layers are used as inputs, 
   and its own feature-maps are used as inputs into all subsequent layers. As a result, DenseNet provides several
-  compelling advantagesthey alleviate the vanishing-gradient problem, strengthen feature propagation, encourage
-  feature euse, and substantially reduce the number of parameters.</p>
+  compelling advantages; they alleviate the vanishing-gradient problem, strengthen feature propagation, encourage
+  feature reuse, and substantially reduce the number of parameters.</p>
 <p>On four highly competitive object recognition benchmark tasks (CIFAR-10, CIFAR-100, SVHN, and ImageNet),
-  DenseNets seems to obtain significant accuracy to a previous Convolutional Network Architecture in class - ResNet.
-  For our analysis, we want to explore and compare DenseNet to ResNet in terms of efficienecy/ Computational resource 
-  use, Performance, and Applications, as well as exploring the limitation of DenseNet.
+  DenseNets seems to obtain significant accuracy compared to a previous Convolutional Network Architecture in class - ResNet.
+  For our analysis, we want to explore and compare DenseNet to ResNet in terms of Efficienecy/ Computational resource 
+  use, Performance, and Applications, as well as exploring the limitations of DenseNet.
 </p>
 <h2>Paper Review</h2>
 
 
-<p>We have talked about the problem of vanishing gradient where input or gradient after passing through many layers can vanish and "wash out" by
-  the end of the network. The were many ways of tackling the problem: bypassing signal from one layer to the next via identity connections or
+<p>We have talked about the vanishing gradient problem where the input or gradient can vanish and "wash out" by
+  the end of the network after passing through many layers. There are many ways of tackling this problem: bypassing signals from one layer to the next via identity connections or
   randomly dropping layers during training to allow better information and gradient flow. Both of those approaches share a distinct characteristic:
   they create short paths from early layers to later layers.
 </p>
 <p>DenseNet was introduced as a way to distill this insight into an architecture: Instead of the traditional 
-  convolutional networks with L layers have L connections - one between each layer and its subsequent layer - DenseNet
+  convolutional networks with L layers having L connections - one between each layer and its subsequent layer - DenseNet
   has L(L+1)/2 direct connections. For each layer, the feature-maps of all preceding layers are used as inputs, 
   and its own feature-maps are used as inputs into all subsequent layers. Crucially, in contrast to ResNets, 
-  DenseNet never combine features through summation before they are passed into a layer; instead, they combine 
-  features by concatenating them. These features helps DenseNet achieve 3 effects: it requires fewer parameters, it avoid the vanishing-gradient
-problem, and it provides a regularizing effect on small dataset</p>
+  DenseNet never combines features through summation before they are passed into a layer; instead, they combine 
+  features by concatenating them. These features help DenseNet achieve 3 effects: it requires fewer parameters, it avoids the vanishing gradient
+problem, and it provides a regularizing effect on small datasets.</p>
 <img src="resource\DenseNet_vs_ResNet.png" alt="Architecture">
-<p>Having talked about DenseNet advantages, we also want to explore its drawbacks: Memory access cost grow
-  quadratically for each layer of DenseNet compared to ResNet  due to its concatenating nature: 
-  each downstream layer has to access all feature maps for previous layers in the same Dense Block. Thus,
-  we want to compare the two model DenseNet and ResNet against each other to see if one is better than the other given their advantages and disadvantages mentioned above.</p>
+<p>Having talked about DenseNet's advantages, we also want to explore its drawbacks: Memory access cost grows quadratically for each additional layer
+  for DenseNet as compared to ResNet due to Densenet's concatenating nature: each downstream layer has to access all feature maps in the same DenseBlcok. Thus,
+  we want to compare the two models against each other to see if one is better than the other.</p>
 
 <h3>Section 3: Method & Implementation</h3>
-<p>We will be training both untrained ResNet and DenseNet model with 100 depth and 200 depth on the <a href="https://huggingface.co/datasets/zh-plus/tiny-imagenet" 
+<p>We will be training both untrained ResNet and DenseNet models with 100 depth and 200 depth on the <a href="https://huggingface.co/datasets/zh-plus/tiny-imagenet" 
   target="_blank" rel="noopener noreferrer">TinyImageNet dataset</a> which is a smaller dataset of the ImageNet Dataset and the <a href="https://www.cs.toronto.edu/~kriz/cifar.html" 
-  target="_blank" rel="noopener noreferrer">CIFAR-10 dataset</a> . On these dataset, 
+  target="_blank" rel="noopener noreferrer">CIFAR-10 dataset</a> . On these datasest, 
   we will run the model for 50 epochs and evaluate both models in terms of:</p>
 <ul>
   <li>Accuracy</li>
   <li>Training time</li>
 </ul>
-<p>to see if the two models have the same performance over time and identify when one should  use DenseNet and when one should use ResNet</p>
+<p>to see if the two models have the same performance over time and identify when one should use DenseNet and when one should use ResNet</p>
 
 <h4>Section IV: Experimental Findings</h4>
-<p>Our experiments aimed to evaluate the performance of our implementation of Resnet and DenseNet on new datasets and with reduced training data. While the paper report impressive
-  results in terms of accuracy and parameters for DenseNet vs traditional ResNet, we want to discover 
-  When performing classification on the CIFAR-10 Datasets with both model having 101 layers, DenseNet represent an <b>initial faster prediction ability through its information
-  preservation ability</b> as the model yielded a significantly higher initial accuracy rate as compared to resnet with 58.24% for the first epoch
-  accuracy for densenet and 34.13% accuracy for resnet with the disadvantage of requiring more GPU resources (requiring 1.5GB for DenseNet vs 700MB for ResNet).
-  This testament to its robustness and capability in handling complex image recognition tasks for small datasets such as TinyImagenet and CIFAR-10  as compared to ResNet. 
-  This interesting result also follows as the two models train for more epochs on these two small dataset, with DenseNet achieve a visibly higher accuracy with a top accuracy of <b>76.83% over 50 epochs</b> as compared to
-ResNet with a top accuracy of <b>70.88%</b>. However, one note-worthy results is the number of <b>time it takes to train one epoch for DenseNet vs ResNet is significantly different as it takes approximately 60 seconds to train 
+<p>Our experiments aimed to evaluate the performance of our implementation of Resnet and DenseNet on new datasets and with reduced training data. While the paper reports impressive
+  results in terms of accuracy and parameters for DenseNet vs traditional ResNet, we want to discover if that is the case when taking into account training time.
+  When performing classification on the CIFAR-10 Datasets with both models having 101 layers, DenseNet represents an <b>initial faster prediction ability through its information
+  preservation ability</b> as the model yielded a significantly higher initial accuracy rate as compared to ResNet with 58.24% for the first epoch
+  accuracy for DenseNet and 34.13% accuracy for ResNet with the disadvantage of requiring more GPU resources (requiring 1.5GB for DenseNet vs 700MB for ResNet).
+  This is a testament to its robustness and capability in handling complex image recognition tasks for small datasets such as TinyImagenet and CIFAR-10  as compared to ResNet. 
+  This interesting result also follows as the two models train for more epochs on these two small datasets, with DenseNet achieving a visibly higher accuracy with a top accuracy of <b>76.83% over 50 epochs</b> as compared to
+ResNet with a top accuracy of <b>70.88%</b>. However, one note-worthy result is the number of <b>time it takes to train one epoch for DenseNet vs ResNet is significantly different as it takes approximately 60 seconds to train 
 an epoch for ResNet vs 97 seconds for an epoch of DenseNet. When applying more epochs to ResNet, we can see that ResNet exhibits a top accuracy of 75.5%, 1.5% lower than DenseNet.</b></p>
 <img src="resource\download.png" alt="AccuracyCIFAR-10", class = "AccuracyCIFAR-10">
 <img src="resource\AccuracyEpochCIFAR-10.png" alt="AccuracyCIFAR-10", class = "AccuracyCIFAR-10">
 
-<p>The same pattern is observed in the TinyImageNet dataset where we run the two models for 20 epochs. ResNet exhibits a faster training time as compared as DenseNet with
-  the tradeoff of lower accuracy per epoch and lower top accuracy of 33.24% as compared to DenseNet's 43.14% accuracy. In this case, the difference in accuracy is more prominent
-  as the TinyImageNet dataset has more classes, and with low epochs, it is harder for ResNet to generalize the pattern as compared to DenseNet with the same layer.
+<p>The same pattern is observed in the TinyImageNet dataset where we run the two models for 20 epochs. ResNet exhibits a faster training time as compared to DenseNet with
+  the tradeoff of lower accuracy per epoch and a lower top accuracy of 33.24% as compared to DenseNet's 43.14% top accuracy. In this case, the difference in accuracy is more prominent
+  as the TinyImageNet dataset has more classes, and with low epochs, it is harder for ResNet to generalize the pattern as compared to DenseNet with the same layers.
 </p>
 <img src="resource\AccuracyTimeTinyImageNet.png" alt="AccuracyCIFAR-10", class = "AccuracyCIFAR-10">
 <img src="resource\AccuracyEpochTinyImageNet.png" alt="AccuracyCIFAR-10", class = "AccuracyCIFAR-10">
-<p>However, when increasing the layer for DenseNet from 100 to 200, the training time doubles to 175 seconds per epoch for the CIFAR-10 Dataset while the accuracy is around the same, or sometimes even lower for DenseNet with
-  more layer. This is due to the dense connections and concatenations of feature maps from all preceding layers leading to DenseNets becoming quite memory intensive,
-    especially as the network depth increases. This issue is less prominent with ResNet as it's preserving information through an indentity mapping, not by concatening so the memory cost
+<p>However, when increasing the layers for DenseNet from 100 to 200, the training time doubles to 175 seconds per epoch for the CIFAR-10 Dataset while the accuracy is around the same, or sometimes even lower for DenseNet with
+  more layers. This is due to the dense connections and concatenations of feature maps from all preceding layers leading to DenseNets becoming quite memory intensive,
+    especially as the network depth increases. This issue is less prominent with ResNet as it's preserving information through identity mapping, not by concatenating, so the memory cost
   is linear. </p>
 
 <h4>Section V: Conclusions</h4>
-<p>With ResNet using skip connections to implement identity mappings, allowing gradients to flow through the network without attenuation whereas DenseNetuses dense connections, concatenating feature maps from all preceding layers,
+<p>With ResNet using skip connections to implement identity mappings, allowing gradients to flow through the network without attenuation whereas DenseNet uses dense connections, concatenating feature maps from all preceding layers,
 training time to get to a certain accuracy for both models is significantly different with ResNet training time and computational requirements being significantly lower than DenseNet to get to the same accuracy.
-Having said that, <b>DenseNet ability regularize with small dataste and feature reuse throughout network allow for better accuracy and is suitable for shallow network with small dataset</b>. <b>ResNet, on the other hand,
-is more suitable for deeper network with its low computational requirement, its shorter training time, and its simplicity with helps with hyperparameter tuning.</b>
+Having said that, <b>DenseNet's ability to regularize with small datasets and feature reuse throughout the network allows for better accuracy and is suitable for shallow networks with small datasets</b>. <b>ResNet, on the other hand,
+is more suitable for deeper networks with its low computational requirements, shorter training time, and simplicity, which helps with hyperparameter tuning.</b>
 <h3>References</h3>
 
 <p><a name="DenseNet">[1]</a> <a href="https://arxiv.org/pdf/1608.06993.pdf"
