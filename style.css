@@ -72,3 +72,9 @@ img{
 nobr.widenobr {
   white-space: normal;
 }
+.AccuracyCIFAR-10{
+  display: block;
+  margin: 0 auto; 
+  width: 30em;       /* Center the image horizontally */
+  padding: 5px;           /* Add some space inside the border */
+}
